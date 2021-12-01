@@ -1,0 +1,95 @@
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8"/>
+  <title>zpass3</title>
+  <link rel="stylesheet" type="text/css" href="css/index.css">
+  <script type="text/javascript" src="libs/unorm.js"></script>
+  <script type="text/javascript" src="libs/buffer.js"></script>
+  <script type="text/javascript" src="libs/scrypt.js"></script>
+  <script type="text/javascript" src="libs/zpass3.js"></script>
+  <script>
+function show_pass()
+{
+    var elem = document.getElementById('out');
+    elem.className = "vis";
+    elem.select();
+}
+
+document.addEventListener("keyup", function(event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById("genbutton").click();
+    }
+});
+
+function gen_pass() {
+    var keyword = document.getElementById('keyword').value;
+    var uri = document.getElementById('uri').value;
+    var genPass = zpass3(keyword, uri, showResult);
+}
+
+function showResult(genPass) {
+    // make password text selected for copy/past
+    var range = document.createRange();
+    var out = document.getElementById('out');
+    out.className = "inv";
+    out.value = genPass;
+    range.selectNodeContents(out);
+    var s = window.getSelection();
+    s.removeAllRanges();
+    s.addRange(range);
+    out.select();
+    document.execCommand('copy');
+    info = document.getElementById('info');
+    info.innerHTML="You may copy to your clipboard: [Ctrl+C] or [CMD+C]";
+}
+function clearInfo() {
+    info = document.getElementById('info');
+    info.innerHTML="&nbsp;"
+}
+  </script>
+  <style>
+    .inv::selection {
+        color: #000;
+        background: #000;
+    }
+    .inv {
+        color: #FFF;
+    }
+    .vis::selection {
+        color: #FFF;
+        background: #000;
+    }
+    .vis {
+        color: #000;
+    }
+  </style>
+</head>
+
+<body>
+  <p>
+    Master Password: <br />
+    <input type="password" id="keyword" /><br />
+    URI: <br />
+    <input type="text" id="uri" /><br />
+  </p>
+  <p>
+    <label>Password:</label> <br />
+    <input type="text" id="out" tabindex="-1" onfocusout="clearInfo()" />
+  </p>
+  <p id="info">&nbsp;</p>
+  <p>
+    <button id="genbutton" onclick="gen_pass();">Gen Pass</button>
+    <button id="showbutton" onclick="show_pass();">Show Pass</button>
+  </p>
+  <div class="footer">
+    <p>Developed by <a href="https://github.com/jclopes/">João Lopes</a></p>
+    </p>
+  </div>
+    <script type="text/javascript" language="JavaScript">
+      document.getElementById("keyword").focus();
+    </script>
+
+</body>
+</html>
