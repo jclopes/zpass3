@@ -26,10 +26,11 @@ document.addEventListener("keyup", function(event) {
 function gen_pass() {
     var keyword = document.getElementById('keyword').value;
     var uri = document.getElementById('uri').value;
-    var genPass = zpass3(keyword, uri, showResult);
-}
+    var genPass = zpass3(keyword, uri);
 
-function showResult(genPass) {
+    // NOTE: Copy/past code needs to be inside the same function that was
+    // triggered by a user action. Otherwise mobile devices wont do the
+    // clipboard action.
     // make password text selected for copy/past
     var range = document.createRange();
     var out = document.getElementById('out');
@@ -41,9 +42,11 @@ function showResult(genPass) {
     s.addRange(range);
     out.select();
     document.execCommand('copy');
+
     info = document.getElementById('info');
     info.innerHTML="You may copy to your clipboard: [Ctrl+C] or [CMD+C]";
 }
+
 function clearInfo() {
     info = document.getElementById('info');
     info.innerHTML="&nbsp;"

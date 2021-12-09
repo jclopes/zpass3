@@ -1,7 +1,7 @@
 // Derives a password from a scret + uri.
 // The derived password string will be passed to the callback function as the
 // only argument.
-function zpass3(secret, uri, callback) {
+function zpass3(secret, uri) {
     // Uint8Array
     var salt = [
         31, 158, 75, 14, 65, 252, 216, 116, 202, 114, 49, 243, 24, 202, 172, 122,
@@ -28,7 +28,7 @@ function zpass3(secret, uri, callback) {
         key = new buffer.Buffer(key);
         res = postProcess(key);
     } while(!checkComplexity(res));
-    callback(res)
+    return res;
 }
 
 // Ensures that the derived password complies to the requirements of diversity
