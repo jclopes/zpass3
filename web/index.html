@@ -43,14 +43,19 @@ function gen_pass() {
     out.select();
     document.execCommand('copy');
 
-    info = document.getElementById('info');
-    info.innerHTML="You may copy to your clipboard: [Ctrl+C] or [CMD+C]";
+    set_info("You may copy to your clipboard: [Ctrl+C] or [CMD+C]");
 }
 
 function clearInfo() {
     info = document.getElementById('info');
     info.innerHTML="&nbsp;"
 }
+
+function set_info(message) {
+    info = document.getElementById('info');
+    info.innerHTML=message;
+}
+
   </script>
   <style>
     .inv::selection {
