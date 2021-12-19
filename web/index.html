@@ -9,13 +9,6 @@
   <script type="text/javascript" src="libs/scrypt.js"></script>
   <script type="text/javascript" src="libs/zpass3.js"></script>
   <script>
-function show_pass()
-{
-    var elem = document.getElementById('out');
-    elem.className = "vis";
-    elem.select();
-}
-
 document.addEventListener("keyup", function(event) {
     if (event.keyCode === 13) {
         event.preventDefault();
@@ -23,39 +16,56 @@ document.addEventListener("keyup", function(event) {
     }
 });
 
-function gen_pass() {
-    var keyword = document.getElementById('keyword').value;
-    var uri = document.getElementById('uri').value;
-    var genPass = zpass3(keyword, uri);
-
+function clipboardCopy() {
     // NOTE: Copy/past code needs to be inside the same function that was
     // triggered by a user action. Otherwise mobile devices wont do the
     // clipboard action.
     // make password text selected for copy/past
     var range = document.createRange();
     var out = document.getElementById('out');
-    out.className = "inv";
-    out.value = genPass;
     range.selectNodeContents(out);
     var s = window.getSelection();
     s.removeAllRanges();
     s.addRange(range);
     out.select();
     document.execCommand('copy');
-
-    set_info("You may copy to your clipboard: [Ctrl+C] or [CMD+C]");
 }
 
-function clearInfo() {
+async function genPass() {
+    infoSet("... Processing ...");
+    var keyword = document.getElementById('keyword').value;
+    var uri = document.getElementById('uri').value;
+    var out = document.getElementById('out');
+    let promise = new Promise(function(resolve) {
+        /* The promise and the setTimeout are required to allow the browser
+           to render one last time before we block on zpass3() call. */
+        setTimeout(function() {
+            var genPass = zpass3(keyword, uri);
+            infoSet("Ready");
+            resolve(genPass);
+        }, 0);
+    });
+    out.className = "inv";
+    out.value = await promise;
+    clipboardCopy();
+}
+
+function infoClear() {
     info = document.getElementById('info');
     info.innerHTML="&nbsp;"
 }
 
-function set_info(message) {
+function infoSet(message) {
     info = document.getElementById('info');
     info.innerHTML=message;
 }
 
+function showPass()
+{
+    var elem = document.getElementById('out');
+    elem.className = "vis";
+    elem.select();
+}
   </script>
 </head>
 
@@ -68,12 +78,13 @@ function set_info(message) {
   </p>
   <p>
     <label>Password:</label> <br />
-    <input type="text" id="out" tabindex="-1" onfocusout="clearInfo()" />
+    <input type="text" id="out" tabindex="-1" onfocusout="infoClear()" />
   </p>
   <p id="info">&nbsp;</p>
   <p>
-    <button id="genbutton" onclick="gen_pass();">Gen Pass</button>
-    <button id="showbutton" onclick="show_pass();">Show Pass</button>
+    <button id="genbutton" onclick="genPass();">Gen Pass</button>
+    <button id="showbutton" onclick="showPass();">Show Pass</button>
+    <button id="copybutton" onclick="clipboardCopy();infoSet('Copied!');">Copy</button>
   </p>
   <div class="footer">
     <p>Developed by <a href="https://github.com/jclopes/">João Lopes</a></p>
