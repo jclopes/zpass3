@@ -14,4 +14,25 @@ input {
   display: block;
   margin-bottom: 10px;
   padding: 5px;
+  font-family: monospace;
+}
+
+select, textarea {
+  font-family: monospace;
+}
+
+/* Make output field visible/invisible */
+.inv::selection {
+  color: #000;
+  background: #000;
+}
+.inv {
+  color: #FFF;
+}
+.vis::selection {
+  color: #FFF;
+  background: #000;
+}
+.vis {
+  color: #000;
 }
