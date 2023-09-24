@@ -83,4 +83,4 @@ function checkComplexity(text) {
     return hasNumber.test(text) && hasUpper.test(text) && hasLower.test(text) && hasSymbol.test(text);    
 }
 
-module.exports = { checkComplexity }
+module.exports = { checkComplexity, encodeBytes }
