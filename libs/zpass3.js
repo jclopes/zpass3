@@ -82,3 +82,5 @@ function checkComplexity(text) {
     var hasSymbol = /(!|\?)/;
     return hasNumber.test(text) && hasUpper.test(text) && hasLower.test(text) && hasSymbol.test(text);    
 }
+
+module.exports = { checkComplexity, encodeBytes }
