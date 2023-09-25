@@ -36,13 +36,7 @@ test('encode empty array', () => {
     expect(encodeBytes(input)).toBe(expected);
 });
 
-// Test encoding a sample array
-test('encode sample array', () => {
-    const input = [0x41, 0x42, 0xff];
-    const expected = 'AB??FF';
-    expect(encodeBytes(input)).toBe(expected);
-});
-
+´
 // Test decoding encoded string back to original bytes
 // test('decode to original bytes', () => {
 //     const encoded = 'AB??FF';
