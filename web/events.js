@@ -12,7 +12,7 @@ function clipboardCopy() {
     // clipboard action.
     // make password text selected for copy/past
     var range = document.createRange();
-    var out = document.getElementById('out');
+    var out = document.getElementById('outinput');
     range.selectNodeContents(out);
     var s = window.getSelection();
     s.removeAllRanges();
@@ -25,7 +25,7 @@ async function genPass() {
     infoSet("... Processing ...");
     var keyword = document.getElementById('keyword').value;
     var uri = document.getElementById('uri').value;
-    var out = document.getElementById('out');
+    var out = document.getElementById('outinput');
     let promise = new Promise(function(resolve) {
         /* The promise and the setTimeout are required to allow the browser
            to render one last time before we block on zpass3() call. */
@@ -73,3 +73,9 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // Missing the infoSet: infoSet('Copied!');">
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('outinput')
+        .addEventListener('focusout', infoClear);
+});
