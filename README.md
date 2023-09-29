@@ -25,16 +25,17 @@ How does zpass3 works?
 zpass3 uses modern cryptography to combine your master password with an identifier of the website or app you want to login into and outputs a password.
 Given the same combination of __master password__ and __identifier__ zpass3 will output the same __password__.
 
-Running Docker Image
-----------
-To build and run the image locally run:
-
-`docker run -p 8080:80 [container_name]`
 
 How secure is it?
 -----------------
 The cryptographic function used by zpass3 is called __SCrypt__ and is used to secure all kinds of applications inclusive in Crypto Currency.
 This function is not reversible. That means that even if an attacker would get access to one password and an identifier they would not be able to recover your original master password. 
+
+Running Docker Image
+----------
+To build and run the image locally run:
+
+`docker run -p 8080:80 [container_name]`
 
 Acknowledgments
 ---
