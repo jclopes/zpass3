@@ -35,7 +35,6 @@ async function genPass() {
             resolve(genPass);
         }, 0);
     });
-    out.className = "inv";
     out.value = await promise;
     clipboardCopy();
 }
@@ -50,11 +49,18 @@ function infoSet(message) {
     info.innerHTML=message;
 }
 
-function showPass()
-{
-    var elem = document.getElementById('out');
-    elem.className = "vis";
-    elem.select();
+// Change the type of input to password or text
+function showPass() {
+    let temp = document.getElementById("outinput");
+
+    if (temp.type === "password") {
+        temp.type = "text";
+        document.getElementById('showbutton').innerText = 'Hide Password';
+    }
+    else {
+        temp.type = "password";
+        document.getElementById('showbutton').innerText = 'Show Password';
+    }
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -71,8 +77,6 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('copybutton')
         .addEventListener('click', clipboardCopy);
 });
-
-// Missing the infoSet: infoSet('Copied!');">
 
 
 document.addEventListener('DOMContentLoaded', function () {
